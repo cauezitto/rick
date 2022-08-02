@@ -1,5 +1,10 @@
+const dotenv = require('dotenv')
 const { DisTube } = require("distube")
 const Discord = require("discord.js")
+
+dotenv.config()
+const token = process.env.TOKEN
+
 const client = new Discord.Client({
     intents: [
         Discord.Intents.FLAGS.GUILDS,
@@ -8,11 +13,11 @@ const client = new Discord.Client({
     ]
 })
 const fs = require("fs")
-const config = require("./config.json")
+const config = {...require("./config.json"), token}
 const { SpotifyPlugin } = require("@distube/spotify")
 const { SoundCloudPlugin } = require("@distube/soundcloud")
 
-client.config = require("./config.json")
+client.config = config
 client.distube = new DisTube(client, {
     leaveOnStop: false,
     emitNewSongOnly: true,
